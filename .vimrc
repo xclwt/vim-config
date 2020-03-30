@@ -10,6 +10,7 @@ Plug 'mhinz/vim-startify'
 Plug 'hzchirs/vim-material'
 Plug 'arcticicestudio/nord-vim'
 Plug 'preservim/nerdtree'
+Plug 'ycm-core/YouCompleteMe'
 call plug#end()
 
 
