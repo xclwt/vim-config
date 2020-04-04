@@ -11,6 +11,7 @@ Plug 'hzchirs/vim-material'
 Plug 'arcticicestudio/nord-vim'
 Plug 'preservim/nerdtree'
 Plug 'ycm-core/YouCompleteMe'
+Plug 'dense-analysis/ale'
 call plug#end()
 
 
@@ -146,6 +147,35 @@ source $VIMRUNTIME/menu.vim
 "自动补全
 filetype plugin indent on
 set completeopt=longest,menu
+let g:ycm_global_ycm_extra_conf = '/home/xclwt/.vim/plugged/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+let g:ycm_confirm_extra_conf = 0
+let g:ycm_show_diagnostics_ui = 0
+let g:ycm_min_num_of_chars_for_completion = 2  " 输入第2个字符就罗列匹配项
+nnoremap <c-j> :YcmCompleter GoToDefinitionElseDeclaration<CR>|
+
+let g:ycm_semantic_triggers =  {
+  \   'c' : ['->', '.'],
+  \   'objc' : ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s',
+  \             're!\[.*\]\s'],
+  \   'ocaml' : ['.', '#'],
+  \   'cpp,objcpp' : ['->', '.', '::'],
+  \   'perl' : ['->'],
+  \   'php' : ['->', '::'],
+  \   'cs,java,javascript,typescript,d,python,perl6,scala,vb,elixir,go' : ['.'],
+  \   'ruby' : ['.', '::'],
+  \   'lua' : ['.', ':'],
+  \   'erlang' : [':'],
+  \ }
+  
+let g:ycm_semantic_triggers =  {
+			\ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
+			\ 'cs,lua,javascript': ['re!\w{2}'],
+			\ }
+			
+let g:ycm_filetype_whitelist = { 
+			\ "c":1,
+			\ "cpp":1, 
+			\ }
 
 "自动补全命令时候使用菜单式匹配列表
 set wildmenu
@@ -157,7 +187,7 @@ autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
 autocmd FileType java set omnifunc=javacomplete#Complet
  
- 
+"airline图标设定 
 "let g:airline_theme='simple'
 let g:airline_left_alt_sep = '❯'
 let g:airline_left_sep = ''
@@ -165,5 +195,35 @@ let g:airline_right_alt_sep = '❮'
 let g:airline_right_sep = ''
 let g:airline#extensions#tabline#enabled=1
 
+"语法检查设定
+let g:ale_linters_explicit = 1
+let g:ale_completion_delay = 500
+let g:ale_echo_delay = 20
+let g:ale_lint_delay = 500
+let g:ale_echo_msg_format = '[%linter%] %code: %%s [%severity%]'
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_lint_on_text_changed = 'normal'
+let g:ale_lint_on_insert_leave = 1
+
+let g:ale_linters = {
+            \ 'c': ['gcc','cppcheck'],
+            \ 'cpp': ['g++','cppcheck'],
+            \ }
+let g:ale_c_gcc_options = '-Wall -O2 -m32 -nostdinc -fno-builtin -fno-stack-protector -ggdb -gstabs+
+            \ -I /home/xclwt/文档/GitClone/Blanca-OS/inc/'
+let g:ale_cpp_gcc_options = '-Wall -O2 -std=c++11
+            \ -I .
+            \ -I /usr/include'
+let g:ale_c_cppcheck_options = ''
+let g:ale_cpp_cppcheck_options = ''
+let g:airline#extensions#ale#enabled=1
+map <F4> :ALEDetail<CR>
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
+
+
+"文件树快捷键
 autocmd vimenter * NERDTreeToggle
 map <F3> :NERDTreeToggle<CR>
+
