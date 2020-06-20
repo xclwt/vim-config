@@ -14,14 +14,22 @@ Plug 'ycm-core/YouCompleteMe'
 Plug 'dense-analysis/ale'
 call plug#end()
 
+"hi Normal ctermfg=252 ctermbg=none
 
 set clipboard=unnamed
 "打开语法高亮
 syntax on
 
 "使用配色方案
-colorscheme nova
+"colorscheme nova
 "let g:nova_transparent = 1
+let g:nord_cursor_line_number_background = 1
+let g:nord_bold_vertical_split_line = 1
+let g:nord_uniform_diff_background = 1
+let g:nord_italic_comments = 1
+colorscheme nord
+
+hi Comment ctermfg =3
 
 "打开文件类型检测功能
 filetype on
@@ -118,6 +126,9 @@ set whichwrap+=<,>,h,l
 
 "取消换行
 set nowrap
+
+"共享剪切板
+set clipboard+=unnamed
 
 "启动的时候不显示那个援助索马里儿童的提示
 set shortmess=atI
